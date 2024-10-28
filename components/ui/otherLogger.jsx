@@ -4,12 +4,12 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import icons from "../../constants/icons";
 const OtherLogger = ({ title }) => {
   return (
-    <TouchableOpacity className=" bg-transparent h-[50px] w-full px-16 mt-7 border-[0.5px] border-[#bababa] border-solid items-center justify-center rounded-lg flex-row  ">
+    <TouchableOpacity className=" bg-transparent h-[50px] w-full px-16 mt-7 border-[0.5px] border-[#535353] border-solid items-center justify-center rounded-lg flex-row  ">
       <View>
         {title === "Google" ? (
           <Image
             source={icons.google}
-            className="w-[30px] h-[30px] rounded-full mr-8"
+            className="w-[25px] h-[25px] rounded-full mr-8"
             resizeMode="contain"
           />
         ) : (
@@ -21,7 +21,9 @@ const OtherLogger = ({ title }) => {
         )}
       </View>
 
-      <Text className="text-base text-white font-bold">Login with {title}</Text>
+      <Text className="text-base text-white font-bold">
+        Continue with {title}
+      </Text>
     </TouchableOpacity>
   );
 };

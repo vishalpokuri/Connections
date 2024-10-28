@@ -1,10 +1,4 @@
-import {
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-  StyleSheet,
-} from "react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import OrDivider from "../../components/ui/orDivider";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "../../components/ui/customButton";
