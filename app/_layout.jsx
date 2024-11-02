@@ -2,7 +2,6 @@ import { Stack } from "expo-router";
 import { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 export default function RootLayout() {
-  useEffect(() => {}, []);
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Stack>
@@ -18,6 +17,7 @@ export default function RootLayout() {
             headerShown: false,
           }}
         />
+        <Stack.Screen name="home" options={{ headerShown: false }} />
       </Stack>
     </GestureHandlerRootView>
   );
