@@ -5,14 +5,45 @@ import CustomButton from "../../../components/ui/customButton";
 import FormField from "../../../components/ui/formField";
 import { useState } from "react";
 import OtherLogger from "../../../components/ui/otherLogger";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
+import { BASE_API_URL } from "../../../constants/ngrokRoute";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const Signup = () => {
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const submit = () => {};
+
+  const submit = async () => {
+    setIsSubmitting(true);
+
+    try {
+      //future usage
+      AsyncStorage.setItem("email", form.email);
+
+      const response = await fetch(`${BASE_API_URL}/api/auth/signup`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        setTimeout(() => {
+          router.push("./otp");
+        }, 500);
+        setIsSubmitting(false);
+      } else {
+        console.log(data);
+      }
+    } catch (error) {
+      console.error("Error during signup:", error);
+      alert("Network request failed. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <SafeAreaView className="bg-[#0a0a0a] h-full">
       <ScrollView contentContainerStyle={{ height: "100%" }}>
@@ -29,6 +60,14 @@ const Signup = () => {
             placeholder="hello123@gmail.com"
             handleChangeText={(e) => setForm({ ...form, email: e })}
             otherStyles="mt-4"
+            keyboardType="email-address"
+          />
+          <FormField
+            title="Set Password"
+            value={form.password}
+            placeholder=""
+            handleChangeText={(e) => setForm({ ...form, password: e })}
+            otherStyles="mt-2"
             keyboardType="email-address"
           />
 

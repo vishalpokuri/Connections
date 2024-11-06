@@ -7,13 +7,42 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "../../../../components/ui/customButton";
 
 import { router } from "expo-router";
+import { BASE_API_URL } from "../../../../constants/ngrokRoute";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const CreateUsername = () => {
-  const [usernameValue, setusernameValue] = useState("@");
+  const [usernameValue, setusernameValue] = useState("");
   const [nameValue, setnameValue] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const submit = () => {
-    router.push("./add-socials");
+
+  const submit = async () => {
+    setIsSubmitting(true);
+    const email = await AsyncStorage.getItem("email");
+    try {
+      const response = await fetch(
+        `${BASE_API_URL}/api/userData/createUsername`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            username: usernameValue,
+            name: nameValue,
+            email: email,
+          }),
+        }
+      );
+      const data = await response.json();
+      if (response.ok) {
+        router.push("./add-socials");
+      } else {
+        alert(data.message);
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
   return (
     <SafeAreaView className="bg-[#0a0a0a] h-full">
       <ScrollView contentContainerStyle={{ height: "100%" }}>
@@ -27,12 +56,14 @@ const CreateUsername = () => {
           </Text>
           <FormField
             title="Username"
+            handleChangeText={(e) => setusernameValue(e)}
             value={usernameValue}
-            placeholder="@johnDoe"
+            placeholder="johnDoeOhio"
             otherStyles="mt-4"
           />
           <FormField
             title="Your Name"
+            handleChangeText={(e) => setnameValue(e)}
             value={nameValue}
             placeholder="John Doe"
             otherStyles="mt-4"

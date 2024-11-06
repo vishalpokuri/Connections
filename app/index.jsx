@@ -3,8 +3,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "../components/ui/customButton";
 
 import { StatusBar } from "expo-status-bar";
-import { Redirect, router, useNavigation } from "expo-router";
-import { useEffect } from "react";
+import { router } from "expo-router";
+
 export default function Index() {
   return (
     <SafeAreaView className="bg-[#0a0a0a] h-full">
@@ -12,7 +12,7 @@ export default function Index() {
         <View className="w-full p-6"></View>
         <CustomButton
           title="SignIn"
-          handlePress={() => router.push("/home/profile/profilePage")}
+          handlePress={() => router.push("/signin")}
         />
       </ScrollView>
       <StatusBar backgroundColor="#0a0a0a" style="light" />

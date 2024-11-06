@@ -5,14 +5,53 @@ import { ScrollView } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "../../../../components/ui/customButton";
-
+import { BASE_API_URL } from "../../../../constants/ngrokRoute";
 import { router } from "expo-router";
 import OTPResend from "../../../../components/ui/OTPresend";
 const Otp = () => {
   const [otpValue, setOtpValue] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const submit = () => {
-    router.push("./create-username");
+
+  const submit = async () => {
+    setIsSubmitting(true);
+    try {
+      const response = await fetch(`${BASE_API_URL}/api/auth/verifyotp`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ otp: otpValue }),
+      });
+      const data = await response.json();
+
+      if (response.ok) {
+        router.push("./create-username");
+      } else {
+        alert(data.message);
+      }
+    } catch (e) {
+      console.error("Error submitting OTP: ", e);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const resend = async () => {
+    try {
+      const response = await fetch(
+        "https://376e-36-255-16-55.ngrok-free.app/api/auth/resendotp",
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      const data = await response.json();
+      if (!response.ok) {
+        alert(data.message);
+      } else {
+        console.log("Response: ", response.ok, "otp working");
+      }
+    } catch (e) {
+      console.error(e);
+    }
   };
   return (
     <SafeAreaView className="bg-[#0a0a0a] h-full">
@@ -24,6 +63,9 @@ const Otp = () => {
           <FormField
             title="OTP"
             value={otpValue}
+            handleChangeText={(e) => {
+              setOtpValue(e);
+            }}
             placeholder=""
             otherStyles="mt-4"
             keyboardType="number-pad"
@@ -33,7 +75,7 @@ const Otp = () => {
             handlePress={submit}
             isLoading={isSubmitting}
           />
-          <OTPResend />
+          <OTPResend onResend={resend} />
         </View>
       </ScrollView>
     </SafeAreaView>

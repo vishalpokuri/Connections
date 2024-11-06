@@ -31,24 +31,48 @@ const AddSocials = () => {
             value={socialsValue.telegram}
             placeholder="x.com/......."
             icon="telegram"
+            handleChangeText={(e) => {
+              setSocialsValue({
+                ...socialsValue,
+                telegram: e,
+              });
+            }}
           />
           <IconFormField
             title="Linkedin"
             value={socialsValue.linkedin}
             placeholder="x.com/......."
             icon="linkedin"
+            handleChangeText={(e) => {
+              setSocialsValue({
+                ...socialsValue,
+                linkedin: e,
+              });
+            }}
           />
           <IconFormField
             title="Github"
             value={socialsValue.github}
             placeholder="x.com/......."
             icon="github"
+            handleChangeText={(e) => {
+              setSocialsValue({
+                ...socialsValue,
+                github: e,
+              });
+            }}
           />
           <IconFormField
             title="x"
             value={socialsValue.x}
             placeholder="x.com/......."
             icon="x"
+            handleChangeText={(e) => {
+              setSocialsValue({
+                ...socialsValue,
+                x: e,
+              });
+            }}
           />
           <CustomButton
             title="Continue"

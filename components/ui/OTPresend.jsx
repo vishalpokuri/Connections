@@ -22,7 +22,7 @@ function OTPResend({ onResend }) {
     if (!isLocked) {
       setTimer(30);
       setIsLocked(true);
-      // onResend(); // Call the onResend callback provided by the parent
+      onResend(); // Call the onResend callback provided by the parent
     }
   };
 

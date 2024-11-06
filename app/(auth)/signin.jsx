@@ -15,6 +15,7 @@ export default function Signin() {
   const submit = () => {
     router.push("/signup/otp");
   };
+
   return (
     <SafeAreaView className="bg-[#0a0a0a] h-full">
       <ScrollView contentContainerStyle={{ height: "100%" }}>
